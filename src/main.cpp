@@ -54,7 +54,8 @@ void terminal() {
   int16_t promptSize = -1;
   int16_t terminalSize = -1;
   
-  const int maxReadSize = 512;
+  // Limit serial read per iteration
+  const int maxReadSize = 1024; 
   char buffer[maxReadSize + 1];
 
   while (running) {
@@ -62,11 +63,17 @@ void terminal() {
     if (Serial1.available()) {
       int bytesRead = Serial1.readBytes(buffer, maxReadSize);
       buffer[bytesRead] = '\0';
+
+      if (receiveString.size() > maxReadSize) {
+        // Only keep last chars
+        receiveString.erase(0, receiveString.size() - maxReadSize);
+        terminalSize = -1; // trigger screen render
+      } 
+      
       receiveString += std::string(buffer);
-      delay(20);
     }
 
-    else if (sendDataFlag) {
+    if (sendDataFlag) {
       Serial1.println(sendString.c_str());
       sendDataFlag = false;
       std::lock_guard<std::mutex> lock(sendMutex);
@@ -98,6 +105,7 @@ void setup() {
   auto serialConfig = serialGetConfig(dataBits, parity, stopBits, flowControl);
   Serial.begin(9600); // for some reason, we have to init Serial to make Serial1 works
   Serial1.begin(baudRateToInt(baudRate), serialConfig, rxPin, txPin);
+  Serial1.setTimeout(100);  // Timeout for readBytes
 
   // Prompt thread
   std::thread inputThread(handlePrompt, std::ref(sendDataFlag), std::ref(sendString), 
