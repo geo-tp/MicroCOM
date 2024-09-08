@@ -20,6 +20,10 @@ The pins used are on the Grove connector:
 - <b>RX Pin:</b> GPIO1 (can be changed in the configuration menu)
 - <b>TX Pin:</b> GPIO2 (can be changed in the configuration menu)
 
+You could use Grove/Dupont connector to interface with the Cardputer:
+
+![Grove to Dupont](grovedupont.jpg)
+
 ## Keybinds:
 
 - <b>Config</b>: Use `Arrows` and `OK` button to toggle configuration options.
