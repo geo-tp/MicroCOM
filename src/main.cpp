@@ -18,7 +18,7 @@ bool flowControl = false;
 bool inverted = false;
 uint8_t selectedIndex = LAUNCH_INDEX;
 
-// Var atomic pour thread input
+// Var atomic for input thread
 std::atomic<bool> sendDataFlag(false);
 std::atomic<bool> running(true);
 
@@ -53,13 +53,16 @@ void config() {
 void terminal() {
   int16_t promptSize = -1;
   int16_t terminalSize = -1;
+  
+  const int maxReadSize = 512;
+  char buffer[maxReadSize + 1];
 
   while (running) {
 
     if (Serial1.available()) {
-      auto receivedString = Serial1.readString();
-      receivedString = receivedString.endsWith("\n") ? receivedString : receivedString + "\n";
-      receiveString += std::string(receivedString.c_str());
+      int bytesRead = Serial1.readBytes(buffer, maxReadSize);
+      buffer[bytesRead] = '\0';
+      receiveString += std::string(buffer);
       delay(20);
     }
 

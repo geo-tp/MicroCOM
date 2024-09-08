@@ -34,7 +34,7 @@ char promptInputHandler() {
     // Update keyboard state
     M5Cardputer.update();
 
-    // Bouton GO
+    // Bouton G0
     if (M5Cardputer.BtnA.isPressed()) {
         delay(100); // debounce
         return KEY_RETURN;
