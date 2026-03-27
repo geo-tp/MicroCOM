@@ -38,8 +38,8 @@ int baudRateToInt(BaudRate baud) {
     }
 }
 
-SerialMode serialGetConfig(uint8_t dataBits, ParityType parity, uint8_t stopBits, bool flowControl) {
-    SerialMode config = M_SERIAL_8N1;
+MSerialMode serialGetConfig(uint8_t dataBits, ParityType parity, uint8_t stopBits, bool flowControl) {
+    MSerialMode config = M_SERIAL_8N1;
 
     // Bits
     switch (dataBits) {
@@ -59,9 +59,9 @@ SerialMode serialGetConfig(uint8_t dataBits, ParityType parity, uint8_t stopBits
 
     // Parity
     if (parity == ODD) {
-        config = static_cast<SerialMode>(config | 0x1);
+        config = static_cast<MSerialMode>(config | 0x1);
     } else if (parity == EVEN) {
-        config = static_cast<SerialMode>(config | 0x2);
+        config = static_cast<MSerialMode>(config | 0x2);
     }
 
     if (flowControl) {

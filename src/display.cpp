@@ -57,7 +57,7 @@ void displayConfig(int baud, uint8_t rx, uint8_t tx, uint8_t dataBits,
     bool selected;
 
     displayClearMainView();
-   M5.Lcd.setTextSize(1.3);
+   M5.Lcd.setTextSize(1);
 
     for (size_t i = 0; i < configStrings.size(); ++i) {
         selected = (i == selectedIndex);

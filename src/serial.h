@@ -3,7 +3,7 @@
 
 #include <string>
 
-enum SerialMode {
+enum MSerialMode {
     M_SERIAL_5N1 = 0x8000010,
     M_SERIAL_6N1 = 0x8000014,
     M_SERIAL_7N1 = 0x8000018,
@@ -52,6 +52,6 @@ enum BaudRate {
 };
 int baudRateToInt(BaudRate baud);
 
-SerialMode serialGetConfig(uint8_t dataBits, ParityType parity, uint8_t stopBits, bool flowControl);
+MSerialMode serialGetConfig(uint8_t dataBits, ParityType parity, uint8_t stopBits, bool flowControl);
 
 #endif
